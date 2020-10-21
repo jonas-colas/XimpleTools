@@ -1,0 +1,20 @@
+@font-face {
+  font-family: geometric-bold;
+  font-weight: 700;
+  font-display: swap;
+  src: url(URWGeometric-Bold.woff) format("woff")
+}
+
+@font-face {
+  font-family: geometric-semi;
+  font-weight: 600;
+  font-display: swap;
+  src: url(URWGeometric-SemiBold.woff) format("woff")
+}
+
+@font-face {
+  font-family: geometric-regular;
+  font-weight: 400;
+  font-display: swap;
+  src: url(URWGeometric-Regular.woff) format("woff")
+}

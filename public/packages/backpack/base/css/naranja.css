@@ -1,0 +1,70 @@
+:root {
+    --blue: #467fd0;
+    --indigo: #6610f2;
+    --purple: #7c69ef;
+    --pink: #e83e8c;
+    --red: #df4759;
+    --orange: #FE5000;
+    --yellow: #ffc107;
+    --green: #42ba96;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #869ab8;
+    --gray-dark: #384c74;
+    --light-blue: #69d2f1;
+    --primary: #FE5000;
+    --secondary: #d9e2ef;
+    --success: #42ba96;
+    --info: #467fd0;
+    --warning: #ffc107;
+    --danger: #df4759;
+    --light: #f1f4f8;
+    --dark: #161c2d;
+    --default: #d9e2ef;
+    --notice: #467fd0;
+    --error: #df4759;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: "geometric-regular", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+}
+
+body {
+    margin: 0;
+    font-family: geometric-regular, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #1b2a4e;
+    text-align: left;
+    background-color: #f9fbfd
+}
+.tooltip {
+    font-family: geometric-regular, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+.popover {
+    font-family: geometric-regular, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+
+.app-header.bg-light .navbar-brand {
+    width: 250px;
+    opacity: 1
+    }
+
+    .app-header.bg-light .navbar-brand:hover {
+    opacity: .8
+    }
+
+.lead .btn{
+    border-radius: 24px;
+    padding: 18px 42px;
+    line-height: .67;
+    text-align: center;
+    font-family: geometric-bold,sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+}
