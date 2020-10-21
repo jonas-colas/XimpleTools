@@ -47,7 +47,6 @@ class CollaboratorCrudController extends CrudController
                             ->descendants
                             ->pluck('id')
                             ->toArray();
-                            ;
 
         //dd($descendants);
 
