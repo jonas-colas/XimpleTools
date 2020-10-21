@@ -94,7 +94,7 @@
         <div class="card-header">
           <i class="fa fa-align-justify"></i> Talento<small> - Material descargable</small>
           <div class="card-header-actions">
-            <a class="card-header-action" href="http://coreui.io/docs/components/bootstrap-carousel/" 
+            <a class="card-header-action" download="Talento - Material descargable.pdf" href="../img-carousel/Talento - Material descargable.pdf" 
             target="_blank"><i class="la la-download"></i>
             </a>
           </div>
