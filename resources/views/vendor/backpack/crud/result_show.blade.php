@@ -1,37 +1,61 @@
 @extends(backpack_view('blank'))
 
-@php
+<?php 
 
-$defaultBreadcrumbs = [
-trans('backpack::crud.admin') => url(config('backpack.base.route_prefix'), 'dashboard'),
-$crud->entity_name_plural => url($crud->route),
-trans('backpack::crud.preview') => false,
-];
+    $defaultBreadcrumbs = [
+        trans('backpack::crud.admin') => url(config('backpack.base.route_prefix'), 'dashboard'),
+        $crud->entity_name_plural => url($crud->route),
+        trans('backpack::crud.preview') => false,
+    ];
 
-// if breadcrumbs aren't defined in the CrudController, use the default breadcrumbs
-$breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
+    // if breadcrumbs aren't defined in the CrudController, use the default breadcrumbs
+    $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 
-//dd($crud->entry);
+    //dd($crud->entry);
 
-//$test = Test::find($crud->entry->test_id)->first();
+    //$test = Test::find($crud->entry->test_id)->first();
+    //$testeur = Setting::get();
+    //dd($testeur);
 
-$subtotal_perfil = $crud->entry->subtotal_perfil;
-$opciones_perfil = array(
-    1 => Setting::get('result_1'),
-    2 => Setting::get('result_2'),
-    3 => Setting::get('result_3'),
-);
-$subtotal_agilidad = $crud->entry->subtotal_agilidad;
-$opciones_agilidad = array(
-    //0 => 'NO COINCIDE',
-    1 => 'Baja',
-    2 => 'Media',
-    3 => 'Alta',
-);
+    $subtotal_perfil = $crud->entry->subtotal_perfil;
+    
+    $opciones_perfil = array(
+        1 => Setting::get('result_1'),
+        2 => Setting::get('result_2'),
+        3 => Setting::get('result_3'),
+    );
+    
+    $subtotal_agilidad = $crud->entry->subtotal_agilidad;
+    
+    $opciones_agilidad = array(
+        //0 => 'NO COINCIDE',
+        1 => 'Baja',
+        2 => 'Media',
+        3 => 'Alta',
+    );
+    //dd($opciones_agilidad[$subtotal_agilidad]);
+    $agi = $opciones_agilidad[$subtotal_agilidad];
 
-  //dd($opciones_agilidad);
+    if ($subtotal_perfil == 1){
+        $perfil = "Enfocado";
+    }else if($subtotal_perfil == 2){
+        $perfil = "Versátil";
+    }else if($subtotal_perfil == 3){
+        $perfil = "Amplio";
+    }
+    //dd($subtotal_perfil." and " .$perfil);
 
-@endphp
+    if($agi == 'Baja' || $perfil == 'Enfocado'){
+        $resp = 'Enfocada';
+        //dd($resp);
+    }else if(($perfil == 'Versátil' && $agi == 'Alta') || ($perfil == 'Versátil' && $agi == 'Media') || ($perfil == 'Amplio' && $agi == 'Media') ){
+        $resp = 'Versátil';
+        //dd($resp);
+    }else if($perfil == 'Amplio' && $agi == 'Alta'){
+        $resp = 'Amplia';
+    }
+
+?>
 
 @section('header')
 	<section class="container-fluid d-print-none">
@@ -55,9 +79,9 @@ $opciones_agilidad = array(
                 <div class="card-body">{!! Setting::get('result_intro') !!}</div>
             </div>
         </div>
-        <div class="col-sm-12 col-xl-6">
+        <div class="col-sm-12 col-xl-6"> 
             <div class="card">
-            <div class="card-header">Perfil Profesional</div>
+            <div class="card-header">Perfil Profesional: {{$perfil}}</div>
             <div class="card-body">
                 <div class="my-4">
                     {!! $opciones_perfil[$subtotal_perfil] !!}
@@ -80,6 +104,12 @@ $opciones_agilidad = array(
                     </div>
                     <canvas id="chart-line" width="400" height="300" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-xl-6"> 
+            <div class="card">
+                <div class="card-header">POSICIÓN DE POTENCIAL: {{$resp}}</div>
             </div>
         </div>
     </div>

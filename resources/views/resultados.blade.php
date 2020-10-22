@@ -1,4 +1,5 @@
-@php
+<!-- @php -->
+<?php 
 
 namespace App\Http\Controllers\Admin;
 
@@ -112,4 +113,4 @@ function results($answers_array){
 }
 
 
-@endphp
+/*@endphp*/
