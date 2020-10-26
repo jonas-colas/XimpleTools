@@ -1,6 +1,7 @@
 @extends(backpack_view('blank'))
 
-@php
+<?php 
+/*@php*/
 
     $evaluation = App\Models\Evaluation::Active()
                                             ->where('type', 0)
@@ -76,7 +77,8 @@
     //         ->wrapper(['class' => 'col-4']),
 	// ]);
 
-@endphp
+/*@endphp*/
+?>
 
 @section('content')
     {{-- In case widgets have been added to a 'content' group, show those widgets. --}}

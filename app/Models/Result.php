@@ -112,7 +112,6 @@ class Result extends Model
         }
 
         return $results;
-        //dd($results);
 
     }
     /*

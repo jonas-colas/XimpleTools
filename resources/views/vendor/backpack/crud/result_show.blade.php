@@ -8,6 +8,9 @@
         trans('backpack::crud.preview') => false,
     ];
 
+    
+
+
     // if breadcrumbs aren't defined in the CrudController, use the default breadcrumbs
     $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 
@@ -33,7 +36,17 @@
         2 => 'Media',
         3 => 'Alta',
     );
-    //dd($opciones_agilidad[$subtotal_agilidad]);
+    
+    //edit posicion sugerida
+    if(isset($_GET['savePosition'])){
+       $position  = $_GET['new_position'];
+       if($position == 1 || $position == 2 || $position == 3){
+        DB::table('results')->where('test_id', $crud->entry->test_id)
+           ->update(['posicion_potencial_sugerida' => $position]);
+       }
+    }
+
+
     $agi = $opciones_agilidad[$subtotal_agilidad];
 
     if ($subtotal_perfil == 1){
@@ -43,18 +56,40 @@
     }else if($subtotal_perfil == 3){
         $perfil = "Amplio";
     }
-    //dd($subtotal_perfil." and " .$perfil);
 
-    if($agi == 'Baja' || $perfil == 'Enfocado'){
-        $resp = 'Enfocada';
-        //dd($resp);
-    }else if(($perfil == 'Versátil' && $agi == 'Alta') || ($perfil == 'Versátil' && $agi == 'Media') || ($perfil == 'Amplio' && $agi == 'Media') ){
-        $resp = 'Versátil';
-        //dd($resp);
-    }else if($perfil == 'Amplio' && $agi == 'Alta'){
-        $resp = 'Amplia';
+    $getInfo = DB::table('results')
+                ->where('test_id', $crud->entry->test_id)
+                ->first();
+    $sugerida = $getInfo->posicion_potencial_sugerida;
+
+    if($sugerida == null){
+
+        if($agi == 1 || $subtotal_perfil == 1){
+            $resp = 1;
+
+        }else if(($subtotal_perfil == 2 && $agi == 3) || ($subtotal_perfil == 2 && $agi == 2) || ($subtotal_perfil == 3 && $agi == 2) ){
+            $resp = 2;
+            
+        }else if($subtotal_perfil == 3 && $agi == 3){
+            $resp = 3;
+        }
+
+        $sugerida = DB::table('results')
+                    ->where('test_id', $crud->entry->test_id)
+                    ->update(['posicion_potencial_sugerida' => $resp]);
     }
 
+    //dd($sugerida);
+
+    if ($sugerida == 1){
+        $resp = "Enfocada";
+    }else if($sugerida == 2){
+        $resp = "Versátil";
+    }else if($sugerida == 3){
+        $resp = "Amplia";
+    }
+
+    
 ?>
 
 @section('header')
@@ -109,13 +144,50 @@
 
         <div class="col-sm-12 col-xl-6"> 
             <div class="card">
-                <div class="card-header">POSICIÓN DE POTENCIAL: {{$resp}}</div>
+                <div class="card-header">
+                    <span class="pull-left">
+                        <b>POSICIÓN DE POTENCIAL: {{$resp}}</b> 
+                    </span>
+                    <button type="button" class="btn btn-warning" data-target="#editPosition" 
+                        data-toggle="modal" style="margin-left: 130px;">
+                        <i class="la la-edit"></i> Editar
+                    </button>
+                    
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 @endsection
 
+<div class="modal fade" id="editPosition" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Actualizar POSICIÓN DE POTENCIAL</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="{{$_SERVER['REQUEST_URI']}}" method="GET">
+              <div class="modal-body">
+                <select name="new_position" class="form-control">
+                    <option >{{'Seleccione una posición'}}</option>
+                    <option value="1">{{'Enfocada'}}</option>
+                    <option value="2">{{'Versátil'}}</option>
+                    <option value="3">{{'Amplia'}}</option>
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" name="savePosition">Guardar Cambio</button>
+              </div>
+              
+          </form>
+        </div>
+    </div>
+</div>
 
 @section('after_styles')
 	<link rel="stylesheet" href="{{ asset('packages/backpack/crud/css/crud.css') }}">

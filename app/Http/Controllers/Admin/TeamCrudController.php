@@ -8,6 +8,9 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Team;
 use App\Models\Evaluation;
 use App\Models\Test;
+use App\Models\Result;
+use DB;
+//use Illuminate\Support\Facades\DB;
 
 /**
  * Class TeamCrudController
@@ -55,7 +58,7 @@ class TeamCrudController extends CrudController
         //dd($children);
 
         CRUD::addClause('whereIn', 'id', $children);
-
+        
         //CRUD::setFromDb(); // columns
         CRUD::enableExportButtons();
         //CRUD::set('show.setFromDb', false);
@@ -65,6 +68,19 @@ class TeamCrudController extends CrudController
          * - CRUD::column('price')->type('number');
          * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
+        
+        /*for($i=0; $i<sizeof($children); $i++){
+            $others = DB::table('tests')->where('user_id', $children[$i])->first();
+            //var_dump($others);
+            if($others != NULL){
+
+                //var_dump($others->id);
+                $resp = DB::table('results')->where('test_id', $others->id)->first();
+                var_dump($resp->agilidad_de_resultados);
+            }
+        }die;*/
+
+
         CRUD::addColumn([
             'name' => 'id',
             'type' => 'text',
@@ -100,6 +116,45 @@ class TeamCrudController extends CrudController
             'type' => 'text',
             'label' => __('base.chief_id'),
         ]);
+        /*CRUD::addColumn([
+            'name' => 'Perfil_Profesional',
+            'type' => 'text',
+            'label' => 'Perfil Profesional',
+        ]);*/
+        /*CRUD::addColumn([
+            'name' => 'Agilidad',
+            'type' => 'text',
+            'label' => 'Agilidad de Aprendizaje',
+        ]);*/
+        /*foreach ($children as $value) {
+            //dd($children);
+            //dd($value);
+            CRUD::addColumn([
+                'name' => 'Conciencia',
+                'type' => 'text',
+                'label' => 'Conciencia de Si',
+            ]);
+            CRUD::addColumn([
+                'name' => 'Cambio',
+                'type' => 'text',
+                'label' => 'Cambio',
+            ]);
+            CRUD::addColumn([
+                'name' => 'Mental',
+                'type' => 'text',
+                'label' => 'Mental',
+            ]);
+            CRUD::addColumn([
+                'name' => 'Interpersonal',
+                'type' => 'text',
+                'label' => 'Interpersonal',
+            ]);
+            CRUD::addColumn([
+                'name' => 'Resultados',
+                'type' => 'text',
+                'label' => 'Resultados',
+            ]);
+        }*/
 
         CRUD::removeButton('update');
         CRUD::removeButton('show');

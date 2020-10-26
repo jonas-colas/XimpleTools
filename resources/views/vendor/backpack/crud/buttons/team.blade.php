@@ -1,4 +1,6 @@
-@php
+<?php 
+/*@php*/
+
 use App\Models\Evaluation;
 use App\Models\Test;
 
@@ -8,8 +10,8 @@ $evaluation = Evaluation::Active()
 $test       = Test::Tests($evaluation->id, $entry->getKey(), backpack_user()->id)
                         ->with('result')
                         ->first();
-
-@endphp
+/*@endphp*/
+?>
 
 
 @if (!empty($evaluation) && empty($test))
