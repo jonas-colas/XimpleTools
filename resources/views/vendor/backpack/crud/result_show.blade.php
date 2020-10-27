@@ -12,8 +12,6 @@
     // if breadcrumbs aren't defined in the CrudController, use the default breadcrumbs
     $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 
-    //dd($crud->entry);
-
     //$test = Test::find($crud->entry->test_id)->first();
     //$testeur = Setting::get();
     //dd($testeur);
@@ -36,14 +34,21 @@
     );
     
     //edit posicion sugerida
+    //dd($crud->entry->test_id);
+    $employe = DB::table('tests')->where('id', $crud->entry->test_id)->first();
+    //dd($employe->user_id);
+
     //dd(auth()->user()->id .' and ' . auth()->user()->chief_id); 
     //if(auth()->user()->name  == auth()->user()->name){}
     if(isset($_GET['savePosition'])){
        $position  = $_GET['new_position'];
-       if($position == 1 || $position == 2 || $position == 3){
-        DB::table('results')->where('test_id', $crud->entry->test_id)
-           ->update(['posicion_potencial_sugerida' => $position]);
-       }
+        if(auth()->user()->id != $employe->user_id){
+
+            if($position == 1 || $position == 2 || $position == 3){
+                DB::table('results')->where('test_id', $crud->entry->test_id)
+                ->update(['posicion_potencial_sugerida' => $position]);
+            }
+        }
     }
 
 
@@ -148,7 +153,7 @@
                     <span class="pull-left">
                         <b>POSICIÓN DE POTENCIAL: {{$resp}}</b> 
                     </span>
-                    <?php if(auth()->user()->id != auth()->user()->chief_id){ ?>
+                    <?php if(auth()->user()->id != $employe->user_id){ ?>
 
                         <button type="button" class="btn btn-warning" data-target="#editPosition" 
                             data-toggle="modal" style="margin-left: 130px;">
