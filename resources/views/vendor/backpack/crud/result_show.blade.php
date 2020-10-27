@@ -65,33 +65,46 @@
     $getInfo = DB::table('results')
                 ->where('test_id', $crud->entry->test_id)
                 ->first();
+    $auto = $getInfo->posicion_potencial_automatica;
     $sugerida = $getInfo->posicion_potencial_sugerida;
 
-    if($sugerida == null){
+    //if($sugerida == null){
+    if($auto == null){
 
         if($agi == 1 || $subtotal_perfil == 1){
-            $resp = 1;
+            $resp_auto = 1;
 
         }else if(($subtotal_perfil == 2 && $agi == 3) || ($subtotal_perfil == 2 && $agi == 2) || ($subtotal_perfil == 3 && $agi == 2) ){
-            $resp = 2;
+            $resp_auto = 2;
             
         }else if($subtotal_perfil == 3 && $agi == 3){
-            $resp = 3;
+            $resp_auto = 3;
         }
 
-        $sugerida = DB::table('results')
+        $auto = DB::table('results')
+                    ->where('test_id', $crud->entry->test_id)
+                    ->update(['posicion_potencial_automatica' => $resp_auto]);
+        /*$sugerida = DB::table('results')
                     ->where('test_id', $crud->entry->test_id)
                     ->update(['posicion_potencial_sugerida' => $resp]);
-    }
+ */   }
 
     //dd($sugerida);
 
+    if ($auto == 1){
+        $auto_in_string = "Enfocada";
+    }else if($auto == 2){
+        $auto_in_string = "Versátil";
+    }else if($auto == 3){
+        $auto_in_string = "Amplia";
+    }
+
     if ($sugerida == 1){
-        $resp = "Enfocada";
+        $resp_suregida = "Enfocada";
     }else if($sugerida == 2){
-        $resp = "Versátil";
+        $resp_suregida = "Versátil";
     }else if($sugerida == 3){
-        $resp = "Amplia";
+        $resp_suregida = "Amplia";
     }
 
     //dd(auth()->user()->id);    
@@ -151,12 +164,32 @@
             <div class="card">
                 <div class="card-header">
                     <span class="pull-left">
-                        <b>POSICIÓN DE POTENCIAL: {{$resp}}</b> 
+                        <b>POSICIÓN DE POTENCIAL AUTOMATICA: {{$auto_in_string}}</b> 
+                    </span>
+                    <?php /*if(auth()->user()->id != $employe->user_id){*/ ?>
+
+                       <!--  <button type="button" class="btn btn-warning" data-target="#editPosition" 
+                            data-toggle="modal" style="margin-left: 130px;">
+                            <i class="la la-edit"></i> Editar
+                        </button> -->
+                   <?php /*}*/ ?>
+                    
+                </div>
+
+            </div>
+            <br>
+        <!-- </div>
+
+        <div class="col-sm-12 col-xl-6">  -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="pull-left">
+                        <b>POSICIÓN DE POTENCIAL SUGERIDA: {{$resp_suregida}}</b> 
                     </span>
                     <?php if(auth()->user()->id != $employe->user_id){ ?>
 
                         <button type="button" class="btn btn-warning" data-target="#editPosition" 
-                            data-toggle="modal" style="margin-left: 130px;">
+                            data-toggle="modal" style="margin-left: 50px;">
                             <i class="la la-edit"></i> Editar
                         </button>
                    <?php } ?>
