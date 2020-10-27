@@ -9,8 +9,6 @@
     ];
 
     
-
-
     // if breadcrumbs aren't defined in the CrudController, use the default breadcrumbs
     $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 
@@ -31,13 +29,15 @@
     $subtotal_agilidad = $crud->entry->subtotal_agilidad;
     
     $opciones_agilidad = array(
-        //0 => 'NO COINCIDE',
+        //0 => 'NO COINCIDE',  
         1 => 'Baja',
         2 => 'Media',
         3 => 'Alta',
     );
     
     //edit posicion sugerida
+    //dd(auth()->user()->id .' and ' . auth()->user()->chief_id); 
+    //if(auth()->user()->name  == auth()->user()->name){}
     if(isset($_GET['savePosition'])){
        $position  = $_GET['new_position'];
        if($position == 1 || $position == 2 || $position == 3){
@@ -89,7 +89,7 @@
         $resp = "Amplia";
     }
 
-    
+    //dd(auth()->user()->id);    
 ?>
 
 @section('header')
@@ -148,10 +148,13 @@
                     <span class="pull-left">
                         <b>POSICIÓN DE POTENCIAL: {{$resp}}</b> 
                     </span>
-                    <button type="button" class="btn btn-warning" data-target="#editPosition" 
-                        data-toggle="modal" style="margin-left: 130px;">
-                        <i class="la la-edit"></i> Editar
-                    </button>
+                    <?php if(auth()->user()->id != auth()->user()->chief_id){ ?>
+
+                        <button type="button" class="btn btn-warning" data-target="#editPosition" 
+                            data-toggle="modal" style="margin-left: 130px;">
+                            <i class="la la-edit"></i> Editar
+                        </button>
+                   <?php } ?>
                     
                 </div>
 
