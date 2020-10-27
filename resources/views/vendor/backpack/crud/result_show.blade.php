@@ -167,12 +167,18 @@
                         <b>POSICIÓN DE POTENCIAL: {{$auto_in_string}}</b> <!--  AUTOMATICA -->
                     </span>
                 </div>
-
             </div>
-            <br>
-        <!-- </div>
 
-        <div class="col-sm-12 col-xl-6">  -->
+            <div class="card p-2">
+                <p> 
+                    <b>En caso de no estar de acuerdo con los resultados automáticos arrojados <br>
+                    por la herramienta y teniendo evidencia para comprobar que los mismos  <br>
+                    no son correctos, puede sugerir una nueva posición de potencial  <br>
+                    a continuación.
+                    </b> 
+                </p>
+            </div>
+
             <?php if(auth()->user()->id != $employe->user_id){ ?>
                 <div class="card">
                     <div class="card-header">
@@ -184,9 +190,7 @@
                             data-toggle="modal" style="margin-left: 50px;">
                             <i class="la la-edit"></i> Editar
                         </button>
-                        
                     </div>
-
                 </div>
             <?php } ?>
         </div>
