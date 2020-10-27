@@ -164,16 +164,8 @@
             <div class="card">
                 <div class="card-header">
                     <span class="pull-left">
-                        <b>POSICIÓN DE POTENCIAL AUTOMATICA: {{$auto_in_string}}</b> 
+                        <b>POSICIÓN DE POTENCIAL: {{$auto_in_string}}</b> <!--  AUTOMATICA -->
                     </span>
-                    <?php /*if(auth()->user()->id != $employe->user_id){*/ ?>
-
-                       <!--  <button type="button" class="btn btn-warning" data-target="#editPosition" 
-                            data-toggle="modal" style="margin-left: 130px;">
-                            <i class="la la-edit"></i> Editar
-                        </button> -->
-                   <?php /*}*/ ?>
-                    
                 </div>
 
             </div>
@@ -184,7 +176,7 @@
             <div class="card">
                 <div class="card-header">
                     <span class="pull-left">
-                        <b>POSICIÓN DE POTENCIAL SUGERIDA: {{$resp_suregida}}</b> 
+                        <b>POSICIÓN DE POTENCIAL: {{$resp_suregida}}</b><!--  SUGERIDA --> 
                     </span>
                     <?php if(auth()->user()->id != $employe->user_id){ ?>
 
