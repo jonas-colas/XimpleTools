@@ -173,22 +173,22 @@
         <!-- </div>
 
         <div class="col-sm-12 col-xl-6">  -->
-            <div class="card">
-                <div class="card-header">
-                    <span class="pull-left">
-                        <b>POSICIÓN DE POTENCIAL: {{$resp_suregida}}</b><!--  SUGERIDA --> 
-                    </span>
-                    <?php if(auth()->user()->id != $employe->user_id){ ?>
+            <?php if(auth()->user()->id != $employe->user_id){ ?>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="pull-left">
+                            <b>POSICIÓN DE POTENCIAL: {{$resp_suregida}}</b><!--  SUGERIDA --> 
+                        </span>
 
                         <button type="button" class="btn btn-warning" data-target="#editPosition" 
                             data-toggle="modal" style="margin-left: 50px;">
                             <i class="la la-edit"></i> Editar
                         </button>
-                   <?php } ?>
-                    
-                </div>
+                        
+                    </div>
 
-            </div>
+                </div>
+            <?php } ?>
         </div>
     </div>
 </div>
