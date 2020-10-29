@@ -10,6 +10,7 @@ $evaluation = Evaluation::Active()
 $test       = Test::Tests($evaluation->id, $entry->getKey(), backpack_user()->id)
                         ->with('result')
                         ->first();
+                  //var_dump($test);
 /*@endphp*/
 ?>
 

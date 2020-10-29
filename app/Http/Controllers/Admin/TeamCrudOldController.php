@@ -45,6 +45,7 @@ class TeamCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+
         $children = Team::where('id', '=', backpack_user()->id)
                             ->with('children')
                             ->first()
@@ -53,20 +54,12 @@ class TeamCrudController extends CrudController
                             ->toArray();
                             ;
 
-        $letTest = DB::table('tests')->where('evaluator_id', backpack_user()->id)
-                                    ->first();
-                                    //->toArray();
-            //->join('tests', 'tests.evaluator_id', '=', 'users.chief_id')
-            //->where('users.chief_id', '=', backpack_user()->id)
-           // ->join('results', 'results.test_id', '=', 'tests.id')
-
-        //dd($letTest);
         //dd($children);
         //dd(backpack_user()->id);
 
-        CRUD::addClause('whereIn', 'id', $children);
         //CRUD::addClause('whereIn', 'id', $children);
-                
+        CRUD::addClause('whereIn', 'id', $children);
+                //->join()
         
         //CRUD::setFromDb(); // columns
         CRUD::enableExportButtons();
