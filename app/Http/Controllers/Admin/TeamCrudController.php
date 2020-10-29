@@ -53,19 +53,39 @@ class TeamCrudController extends CrudController
                             ->toArray();
                             ;
 
-        $letTest = DB::table('tests')->where('evaluator_id', backpack_user()->id)
-                                    ->first();
-                                    //->toArray();
-            //->join('tests', 'tests.evaluator_id', '=', 'users.chief_id')
-            //->where('users.chief_id', '=', backpack_user()->id)
-           // ->join('results', 'results.test_id', '=', 'tests.id')
+        /*$letTest = DB::table('tests')->where('evaluator_id', backpack_user()->id)
+                                    ->select('user_id')
+                                    ->get()
+                                    ->toArray();*/
+        $letTest = DB::table('tests')
+                    ->join('results', 'results.test_id', '=', 'tests.id')
+                    ->where('tests.evaluator_id', backpack_user()->id)
+                    ->select('tests.*', 'results.*')
+                    ->get()
+                    ->toArray();
 
+        //var_dump($letTest);            
         //dd($letTest);
         //dd($children);
-        //dd(backpack_user()->id);
+        //dd(sizeof($letTest));
+        //dd($letTest[0]->user_id);
+
+        for($i=0; $i<sizeof($letTest); $i++){
+            $others = DB::table('users')
+                        ->where('id', $letTest[$i]->user_id)
+                        ->update([
+                            'subtotal_perfil'               => $letTest[$i]->subtotal_perfil, 
+                            'conciencia_de_si_mismo'        => $letTest[$i]->conciencia_de_si_mismo,
+                            'agilidad_de_cambio'            => $letTest[$i]->agilidad_de_cambio,
+                            'agilidad_mental'               => $letTest[$i]->agilidad_mental,
+                            'agilidad_interpersonal'        => $letTest[$i]->agilidad_interpersonal,
+                            'agilidad_de_resultados'        => $letTest[$i]->agilidad_de_resultados,
+                            'posicion_potencial_automatica' => $letTest[$i]->posicion_potencial_automatica,
+                            'posicion_potencial_sugerida'   => $letTest[$i]->posicion_potencial_sugerida,
+                        ]);
+        };
 
         CRUD::addClause('whereIn', 'id', $children);
-        //CRUD::addClause('whereIn', 'id', $children);
                 
         
         //CRUD::setFromDb(); // columns
@@ -79,16 +99,7 @@ class TeamCrudController extends CrudController
          * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
         
-        /*for($i=0; $i<sizeof($children); $i++){
-            $others = DB::table('tests')->where('user_id', $children[$i])->first();
-            //var_dump($others);
-            if($others != NULL){
-
-                //var_dump($others->id);
-                $resp = DB::table('results')->where('test_id', $others->id)->first();
-                var_dump($resp->agilidad_de_resultados);
-            }
-        }die;*/
+        
 
 
         CRUD::addColumn([
@@ -126,31 +137,45 @@ class TeamCrudController extends CrudController
             'type' => 'text',
             'label' => __('base.chief_id'),
         ]);
-        /*CRUD::addColumn([
-            'name' => 'Perfil_Profesional',
+        CRUD::addColumn([
+            'name' => 'subtotal_perfil',
             'type' => 'text',
             'label' => 'Perfil Profesional',
-        ]);*/
-        
+        ]);
         CRUD::addColumn([
-            'name' => 'Conciencia',
+            'name' => 'conciencia_de_si_mismo',
             'type' => 'text',
             'label' => 'Conciencia de Si',
         ]);
         CRUD::addColumn([
-            'name' => 'Cambio',
+            'name' => 'agilidad_de_cambio',
             'type' => 'text',
             'label' => 'Cambio',
         ]);
         CRUD::addColumn([
-            'name' => 'Mental',
+            'name' => 'agilidad_mental',
             'type' => 'text',
             'label' => 'Mental',
         ]);
         CRUD::addColumn([
-            'name' => 'Interpersonal',
+            'name' => 'agilidad_interpersonal',
             'type' => 'text',
             'label' => 'Interpersonal',
+        ]);
+        CRUD::addColumn([
+            'name' => 'agilidad_de_resultados',
+            'type' => 'text',
+            'label' => 'Interpersonal',
+        ]);
+        CRUD::addColumn([
+            'name' => 'posicion_potencial_automatica',
+            'type' => 'text',
+            'label' => 'Posicion de potencial',
+        ]);
+        CRUD::addColumn([
+            'name' => 'posicion_potencial_sugerida',
+            'type' => 'text',
+            'label' => 'Posicion Suregida',
         ]);
 
         CRUD::removeButton('update');

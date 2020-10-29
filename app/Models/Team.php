@@ -8,6 +8,7 @@ use \Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 use App\Models\Thread;
 use App\Models\Dimension;
 use App\Models\Aspect;
+use App\Models\Test;
 
 class Team extends Model
 {
@@ -36,6 +37,14 @@ class Team extends Model
         'cost_center',
         'chief_id',
         'managment',
+        'subtotal_perfil', //perfil_profesional
+        'conciencia_de_si_mismo',
+        'agilidad_de_cambio',
+        'agilidad_mental',
+        'agilidad_interpersonal',
+        'agilidad_de_resultados',
+        'posicion_potencial_automatica', //automatica 
+        'posicion_potencial_sugerida', // Sugerida por el
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -54,6 +63,11 @@ class Team extends Model
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function test()
+    {
+        return $this->hasOne(Test::class);
+    }
 
    /*
     |--------------------------------------------------------------------------

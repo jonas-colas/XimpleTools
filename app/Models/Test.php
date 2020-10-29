@@ -6,6 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Evaluation;
 use App\Models\Result;
+use App\Models\Team;
 
 class Test extends Model
 {
@@ -25,6 +26,7 @@ class Test extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -40,6 +42,12 @@ class Test extends Model
     {
         return $this->belongsTo(Evaluation::class);
     }
+
+    public function Team()
+    {
+        return $this->hasOne(Team::class);
+    }
+
     public function result()
     {
         return $this->hasOne(Result::class);

@@ -34,7 +34,16 @@ class User extends Authenticatable
         'uo',
         'cost_center',
         'chief_id',
+        'posicion_de',
         'managment',
+        'subtotal_perfil', //perfil_profesional
+        'conciencia_de_si_mismo',
+        'agilidad_de_cambio',
+        'agilidad_mental',
+        'agilidad_interpersonal',
+        'agilidad_de_resultados',
+        'posicion_potencial_automatica', //automatica 
+        'posicion_potencial_sugerida', // Sugerida por el
     ];
 
     /**
