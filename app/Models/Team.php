@@ -44,7 +44,7 @@ class Team extends Model
         'agilidad_interpersonal',
         'agilidad_de_resultados',
         'posicion_potencial_automatica', //automatica 
-        'posicion_potencial_sugerida', // Sugerida por el
+        'posicion_potencial_sugerida', // Sugerida por el lider
     ];
     /**
      * The attributes that should be hidden for arrays.

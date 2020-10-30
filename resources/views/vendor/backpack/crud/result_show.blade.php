@@ -36,7 +36,7 @@
     //edit posicion sugerida
     //dd($crud->entry->test_id);
     $employe = DB::table('tests')->where('id', $crud->entry->test_id)->first();
-    //dd($employe->user_id);
+    dd($employe->user_id);
 
     //dd(auth()->user()->id .' and ' . auth()->user()->chief_id); 
     //if(auth()->user()->name  == auth()->user()->name){}

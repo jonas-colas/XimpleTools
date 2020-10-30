@@ -53,10 +53,6 @@ class TeamCrudController extends CrudController
                             ->toArray();
                             ;
 
-        /*$letTest = DB::table('tests')->where('evaluator_id', backpack_user()->id)
-                                    ->select('user_id')
-                                    ->get()
-                                    ->toArray();*/
         $letTest = DB::table('tests')
                     ->join('results', 'results.test_id', '=', 'tests.id')
                     ->where('tests.evaluator_id', backpack_user()->id)
@@ -64,24 +60,56 @@ class TeamCrudController extends CrudController
                     ->get()
                     ->toArray();
 
-        //var_dump($letTest);            
-        //dd($letTest);
         //dd($children);
-        //dd(sizeof($letTest));
-        //dd($letTest[0]->user_id);
-
+        //dd($letTest[0]);
+        $a = $letTest ;
         for($i=0; $i<sizeof($letTest); $i++){
+            //Perfil
+            if($a[$i]->subtotal_perfil == 1) $perfil = 'Enfocado'; 
+            if($a[$i]->subtotal_perfil == 2) $perfil = 'Versátil'; 
+            if($a[$i]->subtotal_perfil == 3) $perfil = 'Amplio'; 
+            //Conciencia
+            if($a[$i]->conciencia_de_si_mismo == 1) $conciencia = 'Bajo'; 
+            if($a[$i]->conciencia_de_si_mismo == 2) $conciencia = 'Medio'; 
+            if($a[$i]->conciencia_de_si_mismo == 3) $conciencia = 'Alto'; 
+            //Cambio
+            if($a[$i]->agilidad_de_cambio == 1) $cambio = 'Bajo'; 
+            if($a[$i]->agilidad_de_cambio == 2) $cambio = 'Medio'; 
+            if($a[$i]->agilidad_de_cambio == 3) $cambio = 'Alto';
+            //Mental
+            if($a[$i]->agilidad_mental == 1) $mental = 'Bajo'; 
+            if($a[$i]->agilidad_mental == 2) $mental = 'Medio'; 
+            if($a[$i]->agilidad_mental == 3) $mental = 'Alto';
+            //Interpersonal
+            if($a[$i]->agilidad_interpersonal == 1) $interpersonal = 'Bajo'; 
+            if($a[$i]->agilidad_interpersonal == 2) $interpersonal = 'Medio'; 
+            if($a[$i]->agilidad_interpersonal == 3) $interpersonal = 'Alto'; 
+            //Resultados
+            if($a[$i]->agilidad_de_resultados == 1) $resultados = 'Bajo'; 
+            if($a[$i]->agilidad_de_resultados == 2) $resultados = 'Medio'; 
+            if($a[$i]->agilidad_de_resultados == 3) $resultados = 'Alto'; 
+
+            //Posicion Automatica
+            if($a[$i]->posicion_potencial_automatica == 1) $automatica = 'Enfocada'; 
+            if($a[$i]->posicion_potencial_automatica == 2) $automatica = 'Versátil'; 
+            if($a[$i]->posicion_potencial_automatica == 3) $automatica = 'Amplia'; 
+
+            //Posicion Sugerida
+            if($a[$i]->posicion_potencial_sugerida == 1) $sugerida = 'Enfocada'; 
+            if($a[$i]->posicion_potencial_sugerida == 2) $sugerida = 'Versátil'; 
+            if($a[$i]->posicion_potencial_sugerida == 3) $sugerida = 'Amplia'; 
+
             $others = DB::table('users')
-                        ->where('id', $letTest[$i]->user_id)
+                        ->where('id', $a[$i]->user_id)
                         ->update([
-                            'subtotal_perfil'               => $letTest[$i]->subtotal_perfil, 
-                            'conciencia_de_si_mismo'        => $letTest[$i]->conciencia_de_si_mismo,
-                            'agilidad_de_cambio'            => $letTest[$i]->agilidad_de_cambio,
-                            'agilidad_mental'               => $letTest[$i]->agilidad_mental,
-                            'agilidad_interpersonal'        => $letTest[$i]->agilidad_interpersonal,
-                            'agilidad_de_resultados'        => $letTest[$i]->agilidad_de_resultados,
-                            'posicion_potencial_automatica' => $letTest[$i]->posicion_potencial_automatica,
-                            'posicion_potencial_sugerida'   => $letTest[$i]->posicion_potencial_sugerida,
+                            'subtotal_perfil'               => $perfil, 
+                            'conciencia_de_si_mismo'        => $conciencia,
+                            'agilidad_de_cambio'            => $cambio,
+                            'agilidad_mental'               => $mental,
+                            'agilidad_interpersonal'        => $interpersonal,
+                            'agilidad_de_resultados'        => $resultados,
+                            'posicion_potencial_automatica' => $automatica,
+                            'posicion_potencial_sugerida'   => $sugerida,
                         ]);
         };
 
