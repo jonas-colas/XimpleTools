@@ -13,8 +13,6 @@
     $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 
     //$test = Test::find($crud->entry->test_id)->first();
-    //$testeur = Setting::get();
-    //dd($testeur);
 
     $subtotal_perfil = $crud->entry->subtotal_perfil;
     
@@ -33,34 +31,32 @@
         3 => 'Alta',
     );
     
-    //edit posicion sugerida
     //dd($crud->entry->test_id);
     $employe = DB::table('tests')->where('id', $crud->entry->test_id)->first();
-    dd($employe->user_id);
-
-    //dd(auth()->user()->id .' and ' . auth()->user()->chief_id); 
-    //if(auth()->user()->name  == auth()->user()->name){}
+    //dd($employe->user_id);
+    
     if(isset($_GET['savePosition'])){
        $position  = $_GET['new_position'];
         if(auth()->user()->id != $employe->user_id){
 
             if($position == 1 || $position == 2 || $position == 3){
                 DB::table('results')->where('test_id', $crud->entry->test_id)
-                ->update(['posicion_potencial_sugerida' => $position]);
+                    ->update(['posicion_potencial_sugerida' => $position]);
+
+                if ($position == 1) $p = "Enfocado";
+                if($position == 2)  $p = "Versátil";
+                if($position == 3)  $p = "Amplio"; 
+
+                DB::table('users')->where('id', $employe->user_id)
+                    ->update(['posicion_potencial_sugerida' => $p]);
             }
         }
     }
 
+    $worker = DB::table('users')->where('id', $employe->user_id)->first();
+    //dd($worker);
 
     $agi = $opciones_agilidad[$subtotal_agilidad];
-
-    if ($subtotal_perfil == 1){
-        $perfil = "Enfocado";
-    }else if($subtotal_perfil == 2){
-        $perfil = "Versátil";
-    }else if($subtotal_perfil == 3){
-        $perfil = "Amplio";
-    }
 
     $getInfo = DB::table('results')
                 ->where('test_id', $crud->entry->test_id)
@@ -68,45 +64,18 @@
     $auto = $getInfo->posicion_potencial_automatica;
     $sugerida = $getInfo->posicion_potencial_sugerida;
 
-    //if($sugerida == null){
     if($auto == null){
-
         if($agi == 1 || $subtotal_perfil == 1){
             $resp_auto = 1;
-
         }else if(($subtotal_perfil == 2 && $agi == 3) || ($subtotal_perfil == 2 && $agi == 2) || ($subtotal_perfil == 3 && $agi == 2) ){
             $resp_auto = 2;
-            
         }else if($subtotal_perfil == 3 && $agi == 3){
             $resp_auto = 3;
         }
-
         $auto = DB::table('results')
                     ->where('test_id', $crud->entry->test_id)
                     ->update(['posicion_potencial_automatica' => $resp_auto]);
-        /*$sugerida = DB::table('results')
-                    ->where('test_id', $crud->entry->test_id)
-                    ->update(['posicion_potencial_sugerida' => $resp]);
- */   }
-
-    //dd($sugerida);
-
-    if ($auto == 1){
-        $auto_in_string = "Enfocada";
-    }else if($auto == 2){
-        $auto_in_string = "Versátil";
-    }else if($auto == 3){
-        $auto_in_string = "Amplia";
     }
-
-    if ($sugerida == 1){
-        $resp_suregida = "Enfocada";
-    }else if($sugerida == 2){
-        $resp_suregida = "Versátil";
-    }else if($sugerida == 3){
-        $resp_suregida = "Amplia";
-    }
-
     //dd(auth()->user()->id);    
 ?>
 
@@ -134,7 +103,7 @@
         </div>
         <div class="col-sm-12 col-xl-6"> 
             <div class="card">
-            <div class="card-header">Perfil Profesional: {{$perfil}}</div>
+            <div class="card-header">Perfil Profesional: {{$worker->subtotal_perfil}}</div>
             <div class="card-body">
                 <div class="my-4">
                     {!! $opciones_perfil[$subtotal_perfil] !!}
@@ -164,7 +133,7 @@
             <div class="card">
                 <div class="card-header">
                     <span class="pull-left">
-                        <b>POSICIÓN DE POTENCIAL: {{$auto_in_string}}</b> <!--  AUTOMATICA -->
+                        <b>POSICIÓN DE POTENCIAL: {{$worker->posicion_potencial_automatica}}</b> <!--  AUTOMATICA -->
                     </span>
                 </div>
             </div>
@@ -183,7 +152,7 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="pull-left">
-                            <b>POSICIÓN DE POTENCIAL: {{$resp_suregida}}</b><!--  SUGERIDA --> 
+                            <b>POSICIÓN DE POTENCIAL: {{$worker->posicion_potencial_sugerida}}</b><!--  SUGERIDA --> 
                         </span>
 
                         <button type="button" class="btn btn-warning" data-target="#editPosition" 
