@@ -53,7 +53,7 @@ class TeamCrudController extends CrudController
                             ->toArray();
                             ;
 
-        $letTest = DB::table('tests')
+        $a = DB::table('tests')
                     ->join('results', 'results.test_id', '=', 'tests.id')
                     ->where('tests.evaluator_id', backpack_user()->id)
                     ->select('tests.*', 'results.*')
@@ -61,9 +61,8 @@ class TeamCrudController extends CrudController
                     ->toArray();
 
         //dd($children);
-        //dd($letTest[0]);
-        $a = $letTest ;
-        for($i=0; $i<sizeof($letTest); $i++){
+        //dd($a[0]);
+        for($i=0; $i<sizeof($a); $i++){
             //Perfil
             if($a[$i]->subtotal_perfil == 1) $perfil = 'Enfocado'; 
             if($a[$i]->subtotal_perfil == 2) $perfil = 'Versátil'; 
